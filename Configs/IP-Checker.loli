@@ -1,0 +1,53 @@
+[SETTINGS]
+{
+  "Name": "nibba - IP-Checker",
+  "SuggestedBots": 25,
+  "MaxCPM": 0,
+  "LastModified": "2019-06-29T22:36:19.028795+00:00",
+  "AdditionalInfo": "Verify your proxies are rotating and test to see how frequently the IP is changing per bot.",
+  "Author": "Brad#6666",
+  "Version": "4.2.0 | h4xr0x.com",
+  "IgnoreResponseErrors": false,
+  "MaxRedirects": 8,
+  "NeedsProxies": true,
+  "OnlySocks": false,
+  "OnlySsl": false,
+  "MaxProxyUses": 0,
+  "BanProxyAfterGoodStatus": false,
+  "EncodeData": false,
+  "AllowedWordlist1": "",
+  "AllowedWordlist2": "",
+  "DataRules": [],
+  "CustomInputs": [],
+  "ForceHeadless": true,
+  "AlwaysOpen": false,
+  "AlwaysQuit": true,
+  "DisableNotifications": true,
+  "CustomUserAgent": "",
+  "RandomUA": true,
+  "CustomCMDArgs": ""
+}
+
+[SCRIPT]
+BROWSERACTION Open 
+
+!NAVIGATE "http://bot.whatismyipaddress.com/" 
+
+REQUEST GET "http://bot.whatismyipaddress.com/" ParseQuery=TRUE 
+  
+  HEADER "User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko" 
+  HEADER "Pragma: no-cache" 
+  HEADER "Accept: */*" 
+  HEADER "Accept-Encoding: gzip, deflate" 
+  HEADER "Accept-Language: en-US,en;q=0.9" 
+  HEADER "Cache-Control: max-age=0" 
+  HEADER "Connection: keep-alive" 
+  HEADER "Host: bot.whatismyipaddress.com" 
+  HEADER "Upgrade-Insecure-Requests: 1" 
+
+PARSE "<SOURCE>" LR "" "" CreateEmpty=FALSE -> CAP "IP" 
+
+KEYCHECK 
+  KEYCHAIN Success OR 
+    KEY "<IP>" 
+
